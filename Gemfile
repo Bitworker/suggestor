@@ -48,3 +48,7 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Custom
+
+gem 'rake', '10.0.4'
