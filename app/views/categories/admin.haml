@@ -1,0 +1,39 @@
+- title "Admin"
+- question_amount = Question.count
+- answer_amount   = Answer.count
+
+%h1
+  Admin-Bereich
+
+%table{ :id => 'data-table' }
+  %thead
+    %tr
+      %th
+        Thema/Frage/Antwort
+      %th
+        Ergebnis
+      %th
+        Redirect zu
+  %tbody
+    - @categories.each_with_index do |category, category_index|
+      %tr{ :"data-tt-id" => category_index }
+        %td
+          Thema: #{category.title}
+        %td
+        %td
+      - category.questions.each_with_index do |question, question_index|
+        %tr{ :"data-tt-id" => question_index + question_amount + category_index, :"data-tt-parent-id" => category_index, :"data-question-id" => question.id }
+          %td
+            Frage: #{question.title} (#{question.id})
+          %td
+          %td
+        - question.answers.each_with_index do |answer, answer_index|
+          %tr{ :"data-tt-id" => answer_index + answer_amount + question_amount + category_index, :"data-tt-parent-id" => question_index + question_amount + category_index }
+            %td
+              Antwort: #{answer.text}
+            %td
+              = answer.result
+            %td
+              - answer.redirect_ids.each do |id|
+                %span.bubble
+                  = link_to "Frage #{id} ", "#", { :class => 'redirect_id', :"data-parent-question-id" => id }

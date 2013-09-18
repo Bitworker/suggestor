@@ -1,0 +1,19 @@
+.header
+  %nav.top-bar
+    %section.top-bar-section
+      %ul.left
+        %li.active
+          = link_to "Suggestor", root_path
+        %li.divider
+        %li.divider
+        %li.divider
+        %li.divider
+      %ul.right
+        %li.divider
+        %li.has-dropdown
+          = link_to "Themen", "#"
+          %ul.dropdown
+            - Category.find_each do |category|
+              %li
+                %label
+                  = link_to category.title, root_path(:category_id => category.id)

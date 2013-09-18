@@ -1,0 +1,35 @@
+- title "#{@category.title}"
+
+= render :partial => 'layouts/header'
+
+.wrapper{ :class => "theme_#{rand(1..4)}" }
+  .category
+    %h3
+      %small
+        Thema:
+    %h2= @category.title
+  .question
+    %h3
+      %small
+        Frage: 
+    %h2= @question.title
+  .answers
+    - @question.answers.each do |answer|
+      .answer
+        %h4= answer_link answer
+  - if @answer.try(:result)
+    .result
+      .panel
+        .w50
+          %h3= @answer.result
+          %p= get_rand_keyword_text(@answer.result)
+          %h6
+            %small= link_to 'Link', get_rand_keyword_link_src(@answer.result), :target => "_blank"
+          %h6
+            %small= link_to 'Mehr Informationen', url_for( :action => 'show', :answer_id => params[:answer_id], :question_id => params[:question_id] )
+        .w50
+          %img{ :src => get_rand_keyword_img_src(@answer.result) }
+
+  = render :partial => 'adsense/main_banner'
+
+= render :partial => 'layouts/footer'
